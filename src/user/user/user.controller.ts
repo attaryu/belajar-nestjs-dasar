@@ -31,11 +31,13 @@ export class UserController {
   }
 
   @Get('/hello')
-  sayHello(
+  async sayHello(
     @Query('first_name') first_name: string,
     @Query('last_name') last_name: string,
-  ): string {
-    return `Hello ${first_name} ${last_name}`;
+  ): Promise<string> {
+    return await new Promise((resolve) =>
+      resolve(`Hello ${first_name} ${last_name}`),
+    );
   }
 
   @Get('/:id')

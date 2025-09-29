@@ -1,4 +1,3 @@
-import type { Request, Response } from 'express';
 import {
   Controller,
   Get,
@@ -12,9 +11,18 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
+import type { Request, Response } from 'express';
 
 @Controller('/api/user')
 export class UserController {
+  @Get('/view/hello')
+  viewHello(@Query('name') name: string, @Res() response: Response) {
+    response.render('index.html', {
+      title: 'Template Engine',
+      name,
+    });
+  }
+
   @Get('/set-cookie')
   setCookie(@Query('name') name: string, @Res() response: Response) {
     response.cookie('name', name);

@@ -1,3 +1,4 @@
+import type { Request, Response } from 'express';
 import {
   Controller,
   Get,
@@ -8,10 +9,23 @@ import {
   Post,
   Query,
   Redirect,
+  Req,
+  Res,
 } from '@nestjs/common';
 
 @Controller('/api/user')
 export class UserController {
+  @Get('/set-cookie')
+  setCookie(@Query('name') name: string, @Res() response: Response) {
+    response.cookie('name', name);
+    response.status(200).send('Success set cookie');
+  }
+
+  @Get('/get-cookie')
+  getCookie(@Req() request: Request) {
+    return request.cookies['name'] as string;
+  }
+
   @Get('/sample-response')
   @Header('Content-Type', 'application/json')
   @HttpCode(200)
